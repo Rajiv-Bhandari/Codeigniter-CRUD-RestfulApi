@@ -107,6 +107,7 @@
     // for creating the user
     $(document).on('submit','#user_form', function(event){
         event.preventDefault();
+
         $.ajax({
             url: "<?php echo base_url(); ?>test_api/action",
             method:"POST",
@@ -114,6 +115,7 @@
             dataType:"json",
             success:function(data)
             {
+                console.log(data)
                 if(data.success)
                 {
                     $('#user_form')[0].reset();
@@ -129,6 +131,29 @@
                     $('#first_name_error').html(data.first_name_error);
                     $('#last_name_error').html(data.last_name_error);
                 }
+            }
+        });
+    });
+
+    // for editing user
+    $(document).on('click', '.edit' , function(){
+        var user_id = $(this).attr('id');
+        console.log(user_id)
+       
+        $.ajax({
+            url: "<?php echo base_url(); ?>test_api/action",
+            method:"POST",
+            data: {user_id:user_id, data_action:'fetch_single'},
+            dataType: 'json',
+            success:function(data)
+            {
+                $('#userModal').modal('show');
+                $('#first_name').val(data.first_name);
+                $('#last_name').val(data.last_name);
+                $('#createModalLabel').text('Edit User');
+                $('#user_id').val(user_id);
+                // $('#action').val('Update');
+                $('#data_action').val('Edit');
             }
         });
     });
