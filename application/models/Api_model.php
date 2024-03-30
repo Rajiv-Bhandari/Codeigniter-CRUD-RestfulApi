@@ -25,4 +25,10 @@ class Api_model extends CI_Model {
         $this->db->where('id', $user_id);
         $this->db->update('name', $data);
     }
+
+    function delete_single_user($user_id)
+    {
+        $this->db->where('id', $user_id);
+        $this->db->delete('name');
+    }
 }

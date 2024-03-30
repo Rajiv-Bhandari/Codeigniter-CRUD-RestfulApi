@@ -115,7 +115,6 @@
             dataType:"json",
             success:function(data)
             {
-                console.log(data)
                 if(data.success)
                 {
                     $('#user_form')[0].reset();
@@ -138,7 +137,6 @@
     // for editing user
     $(document).on('click', '.edit' , function(){
         var user_id = $(this).attr('id');
-        console.log(user_id)
        
         $.ajax({
             url: "<?php echo base_url(); ?>test_api/action",
@@ -156,6 +154,32 @@
                 $('#data_action').val('Edit');
             }
         });
+    });
+
+    $(document).on('click', '.delete', function(){
+        var user_id = $(this).attr('id');
+        if(confirm("Are you sure you want to delete this?"))
+        {
+            $.ajax({
+                url: "<?php echo base_url(); ?>test_api/action",
+                method:"POST",
+                data: {user_id:user_id, data_action:'Delete'},
+                dataType: 'json',
+                success:function(data)
+                {
+                    if(data.success)
+                    {
+                        $('#success-message').html('<div class="alert alert-danger">Data Deleted</div>');
+                        fetch_data();
+                    }
+                    else
+                    {   
+                        $('#success-message').html('<div class="alert alert-danger">Data Deleted</div>');
+                        fetch_data();
+                    }
+                }
+            });
+        }
     });
 </script>
 
